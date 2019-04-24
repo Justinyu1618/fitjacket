@@ -16,8 +16,9 @@ def create_app():
 	
 
 	from app.api.views import api_bp
-	# from app.interface.views import interface_bp
+	from app.interface.views import interface_bp
 	application.register_blueprint(api_bp)
+	application.register_blueprint(interface_bp)
 
 	db.create_all()
 	return application

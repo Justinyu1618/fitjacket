@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Maps{% endblock %}
+
+{% block main_header %}Maps{% endblock %}
+
+{% block sidenav_maps %}<li class="active ">{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header ">
+        Google Maps
+      </div>
+      <div class="card-body ">
+        <div id="map" class="map"></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

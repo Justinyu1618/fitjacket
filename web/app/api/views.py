@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, jsonify
 from app import db
 from flask_sqlalchemy import SQLAlchemy
 import datetime
-from .models import Summary, Heart_Rate, Map
+from app.models import Summary, Heart_Rate, Map
 
 api_bp = Blueprint("api", __name__, url_prefix='/api')
 

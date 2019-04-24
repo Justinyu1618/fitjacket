@@ -7,7 +7,7 @@ from app.models import Summary, Heart_Rate, Map
 interface_bp = Blueprint("interface", __name__, url_prefix='/')
 
 @interface_bp.route('/')
-def redirect():
+def index():
 	return redirect(url_for('interface.dashboard'))
 
 @interface_bp.route('/dashboard', methods=['GET'])

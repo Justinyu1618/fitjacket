@@ -8,7 +8,7 @@ interface_bp = Blueprint("interface", __name__, url_prefix='/')
 
 @interface_bp.route('/')
 def redirect():
-	return redirect(url_for('dashboard'))
+	return redirect(url_for('interface.dashboard'))
 
 @interface_bp.route('/dashboard', methods=['GET'])
 def dashboard():

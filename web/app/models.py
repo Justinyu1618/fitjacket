@@ -1,5 +1,5 @@
 from app import db
-from datetime import datetime
+from datetime import datetime, timedelta
 import uuid
 
 class Summary(db.Model):
@@ -15,8 +15,8 @@ class Summary(db.Model):
     def populate(self, form):
         self.user_id = form['user_id']
         self.run_id = form['run_id']
-        self.start_time = datetime.strptime(form['start_time'], '%m/%d/%y %H:%M:%S')
-        self.end_time = datetime.strptime(form['end_time'], '%m/%d/%y %H:%M:%S')
+        self.start_time = datetime.now() - timedelta(seconds=int(form['duration']))#datetime.strptime(form['start_time'], '%m/%d/%y %H:%M:%S') #POPULATE USING DURATION   
+        self.end_time = datetime.now() #datetime.strptime(form['end_time'], '%m/%d/%y %H:%M:%S')
         self.total_distance = form['total_distance']
         self.step_count = form['step_count']
 
@@ -66,7 +66,7 @@ class Map(db.Model):
         self._id = str(uuid.uuid4())
         self.user_id = form['user_id']
         self.run_id = form['run_id']
-        self.time_stamp = datetime.strptime(form['time_stamp'], '%m/%d/%y %H:%M:%S')
+        self.time_stamp = datetime.now()
         self.lat = form['lat']
         self.lon = form['lon']
 

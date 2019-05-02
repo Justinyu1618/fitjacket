@@ -50,9 +50,15 @@ def heart_rate():
 def map():
 	if request.method == 'POST':
 		try:
-			new_map = Map()
-			new_map.populate(request.form)
-			db.session.add(new_map)
+			lats = request.form['lat'].strip().split(' ')
+	        lons = request.form['lon'].strip().split(' ')
+	        for i in range(len(lats)):
+				new_map = Map()
+				form = request.form
+				form['lat'] = lats[i]
+				form['lon'] = lons[i]
+				new_map.populate(form)
+				db.session.add(new_map)
 			db.session.commit()
 			return "True"
 		except Exception as e:

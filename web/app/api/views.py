@@ -13,6 +13,7 @@ def summaries():
 		try:
 			new_summary = Summary()
 			new_summary.populate(request.form)
+			print(new_summary)
 			db.session.add(new_summary)
 			db.session.commit()
 			return "True"
@@ -46,7 +47,7 @@ def heart_rate():
 				}
 		return jsonify(ret)
 
-@api_bp.route('/maps', methods=['POST'])
+@api_bp.route('/maps', methods=['POST', 'GET'])
 def map():
 	if request.method == 'POST':
 		try:
@@ -54,7 +55,7 @@ def map():
 			lons = request.form['lon'].strip().split(' ')
 			for i in range(len(lats)):
 				new_map = Map()
-				form = request.form
+				form = request.form.copy()
 				form['lat'] = lats[i]
 				form['lon'] = lons[i]
 				new_map.populate(form)
@@ -63,13 +64,13 @@ def map():
 			return "True"
 		except Exception as e:
 			return str(e)
-	# elif request.method == 'GET':
-	# 	user_id = request.args.get('user_id')
-	# 	sums = Summary.query.filter_by(user_id=user_id)
-	# 	ret = {'timestamp': datetime.datetime.now(),
-	# 			'data': [s.serialize() for s in sums]
-	# 			}
-	# 	return jsonify(ret)
+	elif request.method == 'GET':
+		user_id = request.args.get('user_id')
+		maps = Map.query.filter_by(user_id=user_id)
+		ret = {'timestamp': datetime.datetime.now(),
+				'data': [m.serialize() for m in maps]
+				}
+		return jsonify(ret)
 
 @api_bp.route('/register', methods=['GET'])
 def register():

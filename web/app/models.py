@@ -32,7 +32,6 @@ class Summary(db.Model):
 
 
 class Heart_Rate(db.Model):
-
     __tablename__ = 'heart_rates'
     _id = db.Column(db.String, primary_key=True)
     user_id = db.Column(db.String)

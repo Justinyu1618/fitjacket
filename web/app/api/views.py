@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, jsonify
 from app import db
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+from uuid import uuid4
 from app.models import Summary, Heart_Rate, Map
 
 api_bp = Blueprint("api", __name__, url_prefix='/api')
@@ -63,3 +64,14 @@ def map():
 	# 			'data': [s.serialize() for s in sums]
 	# 			}
 	# 	return jsonify(ret)
+
+@api_bp.route('/register', methods=['GET'])
+def register():
+	action = request.args.get('action')
+	if action == 'new_user':
+		return uuid4()
+	elif action == 'new_run':
+		user_id = request.args.get('user_id')
+		if not user_id:
+			return "Must provide user_id"
+		return uuid4()

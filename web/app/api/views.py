@@ -51,8 +51,8 @@ def map():
 	if request.method == 'POST':
 		try:
 			lats = request.form['lat'].strip().split(' ')
-	        lons = request.form['lon'].strip().split(' ')
-	        for i in range(len(lats)):
+			lons = request.form['lon'].strip().split(' ')
+			for i in range(len(lats)):
 				new_map = Map()
 				form = request.form
 				form['lat'] = lats[i]

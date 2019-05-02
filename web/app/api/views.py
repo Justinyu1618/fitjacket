@@ -69,9 +69,9 @@ def map():
 def register():
 	action = request.args.get('action')
 	if action == 'new_user':
-		return uuid4()
+		return str(uuid4())
 	elif action == 'new_run':
 		user_id = request.args.get('user_id')
 		if not user_id:
 			return "Must provide user_id"
-		return uuid4()
+		return str(uuid4())

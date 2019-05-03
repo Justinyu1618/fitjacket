@@ -3675,7 +3675,7 @@ License - nucleoapp.com/license/
     .card .card-header .card-title {
       margin-top: 10px; }
   .card .map {
-    border-radius: 3px; }
+    border-radius: 4px; }
     .card .map.map-big {
       height: 400px; }
   .card[data-background-color="orange"] {
@@ -3815,7 +3815,10 @@ License - nucleoapp.com/license/
   text-align: center; }
 
 .map {
-  height: 500px; }
+  height: 600px; 
+  width: 100%;
+
+}
 
 .card-stats .card-body {
   padding: 15px 15px 0px; }

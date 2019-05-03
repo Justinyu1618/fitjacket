@@ -51,8 +51,10 @@ def heart_rate():
 def map():
 	if request.method == 'POST':
 		try:
-			lats = request.form['lat'].strip().split(' ')
-			lons = request.form['lon'].strip().split(' ')
+			lats = request.form['lat'].strip().split(',')
+			lons = request.form['lon'].strip().split(',')
+			print(lats, len(lats))
+			print(lons, len(lons))
 			for i in range(len(lats)):
 				new_map = Map()
 				form = request.form.copy()

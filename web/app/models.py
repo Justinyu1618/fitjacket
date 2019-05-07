@@ -78,3 +78,36 @@ class Map(db.Model):
             "lat": self.lat,
             "lon": self.lon
         }
+
+class Goal(db.Model):
+    __tablename__ = 'goals'
+    _id = db.Column(db.String, primary_key=True)
+    user_id = db.Column(db.String)
+    set_time = db.Column(db.DateTime)
+    last_modified = db.Column(db.DateTime)
+    steps = db.Column(db.Integer)
+    distance = db.Column(db.Integer)
+
+
+    def populate(self, form):
+        self._id = str(uuid.uuid4())
+        self.user_id = form['user_id']
+        self.set_time = datetime.now()
+        self.last_modified = datetime.now()
+        self.steps = form['steps']
+        self.distance = form['distance']
+
+    def progress(self, steps=0, distance=0):
+        self.steps -= int(steps)
+        self.distance -= int(distance)
+        self.last_modified = datetime.now()
+
+    def serialize(self):
+        return {
+            "_id": self._id,
+            "user_id": self.user_id,
+            "set_time": self.time_stamp,
+            "last_modified": self.last_modified,
+            "steps": self.steps,
+            "distance": self.distance
+        }

@@ -9,6 +9,8 @@ USER_ID = '1'
 MAP_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'templates/maps/map-%s.html')
 print("MAP PATH:", MAP_PATH)
 
+DEBUG_MAP = True
+
 
 interface_bp = Blueprint("interface", __name__, url_prefix='/')
 
@@ -40,7 +42,7 @@ def maps():
 	summaries = Summary.query.filter_by(user_id=USER_ID).all()
 	runs = [s.run_id for s in summaries]
 	for r in runs:
-		if os.path.isfile(MAP_PATH % r):
+		if os.path.isfile(MAP_PATH % r) and not DEBUG_MAP:
 			urls[r] = base + f'/{r}'
 		else:
 			maps = Map.query.filter_by(run_id=r).all()

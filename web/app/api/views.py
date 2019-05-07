@@ -3,22 +3,30 @@ from app import db
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 from uuid import uuid4
-from app.models import Summary, Heart_Rate, Map
+from app.models import Summary, Heart_Rate, Map, Goal
 
 api_bp = Blueprint("api", __name__, url_prefix='/api')
 
 @api_bp.route('/summaries', methods=['GET', 'POST'])
 def summaries():
 	if request.method == 'POST':
-		try:
+		if True:# try:
 			new_summary = Summary()
 			new_summary.populate(request.form)
 			print(new_summary)
+
+			l = list(Goal.query.order_by(Goal.set_time))[::-1]
+			print(f"GOALS: {l}")
+			if l:
+				l[0].progress(steps=new_summary.step_count, distance=new_summary.total_distance)
+			else:
+				print("NO GOALS SET")
+
 			db.session.add(new_summary)
 			db.session.commit()
 			return "True"
-		except Exception as e:
-			return str(e)
+		# except Exception as e:
+		# 	return str(e)
 	elif request.method == 'GET':
 		user_id = request.args.get('user_id')
 		sums = Summary.query.filter_by(user_id=user_id)
@@ -84,3 +92,25 @@ def register():
 		if not user_id:
 			return "Must provide user_id"
 		return str(uuid4())
+
+@api_bp.route('/goals', methods=['GET', 'POST'])
+def goals():
+	if request.method == 'POST':
+		new_goal = Goal()
+		new_goal.populate(request.form)
+		db.session.add(new_goal)
+		db.session.commit()
+		return "True"
+	elif request.method == 'GET':
+		user_id = request.args.get('user_id')
+		action = request.args.get('type')
+		recent_goal = Goal.query.filter_by(user_id=user_id).order_by(Goal.set_time)[::-1]
+		if not recent_goal:
+			return "No goals found"
+		recent_goal = recent_goal[0]
+		print(recent_goal)
+		if action == "steps":
+			return str(recent_goal.steps)
+		elif action == "distance":
+			return str(recent_goal.distance)
+		return "Incorrect parameters"

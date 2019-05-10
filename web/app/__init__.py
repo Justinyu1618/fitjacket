@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-
+USER_ID = '1'
 application = None
 db = None
 

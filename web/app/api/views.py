@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 import datetime
 from uuid import uuid4
 from app.models import Summary, Heart_Rate, Map, Goal
+from app import USER_ID
+from datetime import datetime, timedelta
 
 api_bp = Blueprint("api", __name__, url_prefix='/api')
 
@@ -114,3 +116,18 @@ def goals():
 		elif action == "distance":
 			return str(recent_goal.distance)
 		return "Incorrect parameters"
+
+@api_bp.route('/charts-heart-rate', methods=['GET'])
+def charts_heart_rate():
+	time_range = int(request.args.get('range'))
+	points = list(Heart_Rate.query.filter_by(user_id=USER_ID))
+	data = []
+	cutoff = datetime.now() - timedelta(days=time_range)
+	x_axis = time_range * 3600
+	for p in points:
+		if p.time_stamp > cutoff:
+			x = (p.time_stamp - cutoff).seconds
+			y = p.heart_rate
+			data.append({"x":x, "y":y})
+	return jsonify(data)
+

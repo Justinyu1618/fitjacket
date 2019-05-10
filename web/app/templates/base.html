@@ -78,6 +78,12 @@
               <p>Notifications</p>
             </a>
           </li> -->
+          {% block sidenav_goals %}<li>{% endblock %}
+            <a href="goals">
+              <i class="nc-icon nc-check-2"></i>
+              <p>Goals</p>
+            </a>
+          </li>
           {% block sidenav_profile %}<li>{% endblock %}
             <a href="profile">
               <i class="nc-icon nc-single-02"></i>
@@ -378,6 +384,7 @@
     </div>
   </div>
   <!--   Core JS Files   -->
+  <script src="https://momentjs.com/downloads/moment.js"></script>
   <script src="../static/js/core/jquery.min.js"></script>
   <script src="../static/js/core/popper.min.js"></script>
   <script src="../static/js/core/bootstrap.min.js"></script>
@@ -392,12 +399,15 @@
   <script src="../static/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
   <script src="../static/demo/demo.js"></script>
-  <script>
+
+  {% block scripts %}
+  {% endblock %}
+  <!-- <script>
     $(document).ready(function() {
       // Javascript method's body can be found in static/static-for-demo/js/demo.js
       demo.initChartsPages();
     });
-  </script>
+  </script> -->
 </body>
 
 </html>

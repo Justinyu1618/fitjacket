@@ -2,8 +2,8 @@ from flask import Blueprint, render_template, request, jsonify, redirect, url_fo
 from app import db
 from flask_sqlalchemy import SQLAlchemy
 import datetime, os
-from app.models import Summary, Heart_Rate, Map
-from app.interface.utils import build_map
+from app.models import Summary, Heart_Rate, Map, Goal
+from app.interface.utils import build_map, get_stats, get_heart_rate_data, get_goal_stats
 
 USER_ID = '1'
 MAP_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'templates/maps/map-%s.html')
@@ -20,7 +20,10 @@ def index():
 
 @interface_bp.route('/dashboard', methods=['GET'])
 def dashboard():
-	return render_template('dashboard.html')
+	stats = get_stats(USER_ID)
+	heart_rate_data = get_heart_rate_data(20)
+	print(f"HRD: {heart_rate_data}")
+	return render_template('dashboard.html', stats=stats, heart_rate_data=heart_rate_data)
 
 @interface_bp.route('/runs', methods=['GET'])
 def run_summaries():
@@ -52,7 +55,20 @@ def maps():
 	print('abouot to render')
 	return render_template('maps.html', urls=urls)
 
+@interface_bp.route('/goals', methods=['GET', 'POST'])
+def goals():
+	print(f"REQ: {request.form}")
+	if request.method == 'POST':
+		result = request.form.copy()
+		result['user_id'] = USER_ID
+		new_goal = Goal()
+		new_goal.populate(result)
+		db.session.add(new_goal)
+		db.session.commit()
 
+	stats = get_goal_stats(USER_ID)
+	print(f"GOAL: {stats}")
+	return render_template('goals.html', stats=stats)
 
 @interface_bp.route('/profile', methods=['GET'])
 def user_profile():

@@ -14,6 +14,7 @@ demo = {
   },
 
   initDocChart: function() {
+    print($.getJSON('localhost:5000/api/charts-heart-rate?range=20'))
     chartColor = "#FFFFFF";
 
     ctx = document.getElementById('chartHours').getContext("2d");
@@ -21,34 +22,35 @@ demo = {
     myChart = new Chart(ctx, {
       type: 'line',
 
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
-        datasets: [{
-            borderColor: "#6bd098",
-            backgroundColor: "#6bd098",
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            borderWidth: 3,
-            data: [300, 310, 316, 322, 330, 326, 333, 345, 338, 354]
-          },
-          {
-            borderColor: "#f17e5d",
-            backgroundColor: "#f17e5d",
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            borderWidth: 3,
-            data: [320, 340, 365, 360, 370, 385, 390, 384, 408, 420]
-          },
-          {
-            borderColor: "#fcc468",
-            backgroundColor: "#fcc468",
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            borderWidth: 3,
-            data: [370, 394, 415, 409, 425, 445, 460, 450, 478, 484]
-          }
-        ]
-      },
+      data: $.getJSON('localhost:5000/api/charts-heart-rate?range=20'),
+        //labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
+        
+      //   datasets: [{
+      //       borderColor: "#6bd098",
+      //       backgroundColor: "#6bd098",
+      //       pointRadius: 0,
+      //       pointHoverRadius: 0,
+      //       borderWidth: 3,
+      //       data: [300, 310, 316, 322, 330, 326, 333, 345, 338, 354]
+      //     },
+      //     {
+      //       borderColor: "#f17e5d",
+      //       backgroundColor: "#f17e5d",
+      //       pointRadius: 0,
+      //       pointHoverRadius: 0,
+      //       borderWidth: 3,
+      //       data: [320, 340, 365, 360, 370, 385, 390, 384, 408, 420]
+      //     },
+      //     {
+      //       borderColor: "#fcc468",
+      //       backgroundColor: "#fcc468",
+      //       pointRadius: 0,
+      //       pointHoverRadius: 0,
+      //       borderWidth: 3,
+      //       data: [370, 394, 415, 409, 425, 445, 460, 450, 478, 484]
+      //     }
+      //   ]
+      // },
       options: {
         legend: {
           display: false
@@ -102,34 +104,35 @@ demo = {
     myChart = new Chart(ctx, {
       type: 'line',
 
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
-        datasets: [{
-            borderColor: "#6bd098",
-            backgroundColor: "#6bd098",
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            borderWidth: 3,
-            data: [300, 310, 316, 322, 330, 326, 333, 345, 338, 354]
-          },
-          {
-            borderColor: "#f17e5d",
-            backgroundColor: "#f17e5d",
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            borderWidth: 3,
-            data: [320, 340, 365, 360, 370, 385, 390, 384, 408, 420]
-          },
-          {
-            borderColor: "#fcc468",
-            backgroundColor: "#fcc468",
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            borderWidth: 3,
-            data: [370, 394, 415, 409, 425, 445, 460, 450, 478, 484]
-          }
-        ]
-      },
+      data: $.getJSON('localhost:5000/api/charts-heart-rate?range=20'),
+      // {
+      //   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
+      //   datasets: [{
+      //       borderColor: "#6bd098",
+      //       backgroundColor: "#6bd098",
+      //       pointRadius: 0,
+      //       pointHoverRadius: 0,
+      //       borderWidth: 3,
+      //       data: [300, 310, 316, 322, 330, 326, 333, 345, 338, 354]
+      //     },
+      //     {
+      //       borderColor: "#f17e5d",
+      //       backgroundColor: "#f17e5d",
+      //       pointRadius: 0,
+      //       pointHoverRadius: 0,
+      //       borderWidth: 3,
+      //       data: [320, 340, 365, 360, 370, 385, 390, 384, 408, 420]
+      //     },
+      //     {
+      //       borderColor: "#fcc468",
+      //       backgroundColor: "#fcc468",
+      //       pointRadius: 0,
+      //       pointHoverRadius: 0,
+      //       borderWidth: 3,
+      //       data: [370, 394, 415, 409, 425, 445, 460, 450, 478, 484]
+      //     }
+      //   ]
+      // },
       options: {
         legend: {
           display: false
@@ -284,6 +287,68 @@ demo = {
     });
   },
 
+  initHeartRateChart: function(heart_rate_data) {
+    chartColor = "#FFFFFF";
+    heart_rate_data = JSON.parse(heart_rate_data)
+    console.log(heart_rate_data);
+    ctx = document.getElementById('chartHours').getContext("2d");
+
+    var hr_data = [];
+    for(i=0; i < heart_rate_data.length; i++){
+      hr_data.push({
+        x: new Date(heart_rate_data[i].x),
+        y: heart_rate_data[i].y
+      })
+    }
+    console.log(hr_data);
+    myChart = new Chart(ctx, {
+      type: 'line',
+
+      data: {
+        datasets: [{
+          label: "Heart Rate",
+          borderColor: "#f17e5d",
+          backgroundColor: "#f17e5d",
+          pointRadius: 3,
+          pointHoverRadius: 3,
+          borderWidth: 3,
+          fill: false,
+          data: hr_data,
+        }]
+      },
+      options: {
+        responsive: true,
+        
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              stepSize: 3
+            },
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Date'
+            },
+            ticks: {
+              major: {
+                fontStyle: 'bold',
+                fontColor: '#FF0000'
+              }
+            }
+          }],
+          yAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'value'
+            }
+
+          }]
+        }
+      }
+    });
+  },
   initGoogleMaps: function() {
     var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
     var mapOptions = {

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Workout Goals{% endblock %}
+
+{% block main_header %}Workout Goals{% endblock %}
+
+{% block sidenav_goals %}<li class="active ">{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-4 col-md-6 col-sm-6" style="text-align: center;">
+    <div class="header">
+        <h4 class="card-title">Current Goals</h4>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-4 col-md-6 col-sm-6">
+   
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-globe text-warning"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">Distance Traveled</p>
+              <p class="card-title">{{stats['steps_current']}} / {{stats['steps_goal']}} m</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="progress" style="margin-left: 10px;margin-right: 10px">
+        <div class="progress-bar bg-success" role="progressbar" style="width: {{stats['steps_current']/stats['steps_goal']*100}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-refresh"></i> Last worked on: {{stats['steps_last']}}
+        </div>
+      </div>
+    </div>
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-globe text-warning"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">Distance Traveled</p>
+              <p class="card-title">{{stats['distance_current']}} / {{stats['distance_goal']}} m</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="progress" style="margin-left: 10px;margin-right: 10px">
+        <div class="progress-bar bg-success" role="progressbar" style="width: {{stats['distance_current']/stats['distance_goal']*100}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-refresh"></i> Last worked on: {{stats['distance_last']}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-8 col-md-6 col-sm-6">
+    <div class="card card-user">
+      <div class="card-header">
+        <h5 class="card-title">Update Goals</h5>
+      </div>
+      <div class="card-body">
+        <form action="http://localhost:5000/goals" method="POST">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Running Distance Goal</label>
+                <input type="text" name="distance" class="form-control" placeholder="in meters">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Step Count Goal</label>
+                <input type="text" name="steps" class="form-control" placeholder="# of steps">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Notes</label>
+                <textarea class="form-control textarea">Write down any notes you have about your workout goals</textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="update ml-auto mr-auto">
+              <button type="submit" class="btn btn-primary btn-round">Update Profile</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

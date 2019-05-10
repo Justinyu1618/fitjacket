@@ -87,6 +87,8 @@ class Goal(db.Model):
     last_modified = db.Column(db.DateTime)
     steps = db.Column(db.Integer)
     distance = db.Column(db.Integer)
+    steps_goal = db.Column(db.Integer)
+    distance_goal = db.Column(db.Integer)
 
 
     def populate(self, form):
@@ -94,8 +96,10 @@ class Goal(db.Model):
         self.user_id = form['user_id']
         self.set_time = datetime.now()
         self.last_modified = datetime.now()
-        self.steps = form['steps']
-        self.distance = form['distance']
+        self.steps = int(form['steps'])
+        self.distance = int(form['distance'])
+        self.steps_goal = int(form['steps'])
+        self.distance_goal = int(form['distance'])
 
     def progress(self, steps=0, distance=0):
         self.steps -= int(steps)
@@ -106,8 +110,10 @@ class Goal(db.Model):
         return {
             "_id": self._id,
             "user_id": self.user_id,
-            "set_time": self.time_stamp,
+            "set_time": self.set_time,
             "last_modified": self.last_modified,
             "steps": self.steps,
-            "distance": self.distance
+            "distance": self.distance,
+            "steps_goal": self.steps_goal,
+            "distance_goal": self.distance_goal
         }

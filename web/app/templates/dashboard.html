@@ -21,8 +21,7 @@
             <div class="col-7 col-md-8">
               <div class="numbers">
                 <p class="card-category">Distance Traveled</p>
-                <p class="card-title">40.3 mi
-                  <p>
+                <p class="card-title">{{stats["Distance Traveled"]}}</p>
               </div>
             </div>
           </div>
@@ -47,8 +46,7 @@
             <div class="col-7 col-md-8">
               <div class="numbers">
                 <p class="card-category">Average Pace</p>
-                <p class="card-title">6.5 mph
-                  <p>
+                <p class="card-title">{{stats["Average Pace"]}} km/h</p>
               </div>
             </div>
           </div>
@@ -73,8 +71,7 @@
             <div class="col-7 col-md-8">
               <div class="numbers">
                 <p class="card-category">Completed Runs</p>
-                <p class="card-title">20
-                  <p>
+                <p class="card-title">{{stats["Completed Runs"]}}</p>
               </div>
             </div>
           </div>
@@ -98,9 +95,8 @@
             </div>
             <div class="col-7 col-md-8">
               <div class="numbers">
-                <p class="card-category">Average Heartrate</p>
-                <p class="card-title">130 bpm
-                  <p>
+                <p class="card-category">Step Count</p>
+                <p class="card-title">{{stats["Step Count"]}}</p>
               </div>
             </div>
           </div>
@@ -181,4 +177,14 @@
   </div>
 <!-- </div> -->
 
+{% endblock %}
+
+{% block scripts %}
+<script src="https://momentjs.com/downloads/moment.js"></script>
+<script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in static/static-for-demo/js/demo.js
+      demo.initHeartRateChart('{{heart_rate_data | tojson}}');
+    });
+</script>
 {% endblock %}

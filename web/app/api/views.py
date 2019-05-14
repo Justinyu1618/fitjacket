@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify
 from app import db
 from flask_sqlalchemy import SQLAlchemy
-import datetime
 from uuid import uuid4
 from app.models import Summary, Heart_Rate, Map, Goal
 from app import USER_ID
@@ -32,7 +31,7 @@ def summaries():
 	elif request.method == 'GET':
 		user_id = request.args.get('user_id')
 		sums = Summary.query.filter_by(user_id=user_id)
-		ret = {'timestamp': datetime.datetime.now(),
+		ret = {'timestamp': datetime.now(),
 				'data': [s.serialize() for s in sums]
 				}
 		return jsonify(ret)
@@ -52,7 +51,7 @@ def heart_rate():
 		user_id = request.args.get('user_id')
 		num = int(request.args.get('num_samples'))
 		sums = [x.serialize() for x in list(Heart_Rate.query.filter_by(user_id=user_id))]
-		ret = {'timestamp': datetime.datetime.now(),
+		ret = {'timestamp': datetime.now(),
 				'data': sums[:min(len(sums), num)]
 				}
 		return jsonify(ret)
@@ -79,7 +78,7 @@ def map():
 	elif request.method == 'GET':
 		user_id = request.args.get('user_id')
 		maps = Map.query.filter_by(user_id=user_id)
-		ret = {'timestamp': datetime.datetime.now(),
+		ret = {'timestamp': datetime.now(),
 				'data': [m.serialize() for m in maps]
 				}
 		return jsonify(ret)

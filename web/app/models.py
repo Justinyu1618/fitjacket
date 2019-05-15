@@ -117,3 +117,33 @@ class Goal(db.Model):
             "steps_goal": self.steps_goal,
             "distance_goal": self.distance_goal
         }
+
+class User(db.Model):
+    __tablename__ = 'users'
+    user_id = db.Column(db.String, primary_key=True)
+    email = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
+    description = db.Column(db.String)
+    partners = db.Column(db.String)
+    level = db.Column(db.String)
+
+    def populate(self, form):
+        self.user_id = form['user_id']
+        self.email = form['email']
+        self.first_name = form['first_name']
+        self.last_name = form['last_name']
+        self.description = form['description']
+        self.partners = form['partners']
+        self.level = form['level']
+
+    def serialize(self):
+        return {
+            "user_id": self.user_id,
+            "email": self.email,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "description": self.description,
+            "partners": self.partners,
+            "level": self.level,
+        }

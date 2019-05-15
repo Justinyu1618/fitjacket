@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, session
 from app import db
 from flask_sqlalchemy import SQLAlchemy
 from uuid import uuid4
@@ -119,7 +119,7 @@ def goals():
 @api_bp.route('/charts-heart-rate', methods=['GET'])
 def charts_heart_rate():
 	time_range = int(request.args.get('range'))
-	points = list(Heart_Rate.query.filter_by(user_id=USER_ID))
+	points = list(Heart_Rate.query.filter_by(user_id=session['USER_ID']))
 	data = []
 	cutoff = datetime.now() - timedelta(days=time_range)
 	x_axis = time_range * 3600
@@ -129,4 +129,5 @@ def charts_heart_rate():
 			y = p.heart_rate
 			data.append({"x":x, "y":y})
 	return jsonify(data)
+
 

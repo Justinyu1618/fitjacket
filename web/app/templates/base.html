@@ -84,6 +84,12 @@
               <p>Goals</p>
             </a>
           </li>
+          {% block sidenv_partners %}<li>{% endblock %}
+            <a href="partners">
+              <i class="nc-icon nc-planet"></i>
+              <p>Partners</p>
+            </a>
+          </li>
           {% block sidenav_profile %}<li>{% endblock %}
             <a href="profile">
               <i class="nc-icon nc-single-02"></i>
@@ -155,14 +161,15 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
+                  {% for u in users%}
+                  <a class="dropdown-item" href="{{url_for('interface.new_user') + '?switch_to=' + u.user_id}}">{{u.user_id}}: {{u.first_name + ' ' + u.last_name}}</a>
+                  {% endfor %}
                 </div>
               </li>
               <li class="nav-item">
                 <a class="nav-link btn-rotate" href="#pablo">
                   <i class="nc-icon nc-settings-gear-65"></i>
+                  
                   <p>
                     <span class="d-lg-none d-md-block">Account</span>
                   </p>

@@ -108,7 +108,7 @@ def get_goal_stats(user_id):
 def get_users():
 	return list(User.query.order_by(User.user_id))
 
-def find_partner(target_user, verbose=True):
+def find_partner(target_user, verbose=False):
 	T_lat, T_lon = get_most_recent_map(target_user)
 	all_users = [x.user_id for x in User.query.all()]
 	print(all_users)

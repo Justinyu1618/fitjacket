@@ -24,6 +24,8 @@ def dashboard():
 	if request.method == 'POST':
 		new_user = request.form['new_user']
 		session['USER_ID'] = new_user
+	if 'USER_ID' not in session:
+		session['USER_ID'] = '1'
 	stats = get_stats(session['USER_ID'])
 	heart_rate_data = get_heart_rate_data(20, session['USER_ID'])
 	print(f"HRD: {heart_rate_data}")

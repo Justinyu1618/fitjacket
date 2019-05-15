@@ -21,5 +21,4 @@ def create_app():
 	application.register_blueprint(interface_bp)
 	application.secret_key = 'thisissupersecretkey'
 	db.create_all()
-	session['USER_ID'] = '1'
 	return application

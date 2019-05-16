@@ -155,11 +155,12 @@ def correlate(pts1, pts2):
 def get_most_recent_map(user_id):
 	run = sorted(list(Summary.query.filter_by(user_id=user_id).all()), key=lambda x:x.end_time, reverse=True)
 	if run:
-		run = run[0].run_id
-	print(f"USER: {user_id}, RUN: {run}")
-	maps = Map.query.filter_by(run_id=run)
-	lat_list = [float(m.lat) for m in maps]
-	lon_list = [float(m.lon) for m in maps]
+		for r in run:
+			print(f"USER: {user_id}, RUN: {r}")
+			maps = Map.query.filter_by(run_id=r.run_id)
+			lat_list = [float(m.lat) for m in maps]
+			lon_list = [float(m.lon) for m in maps]
+			if lat_list and lon_list: break
 	return lat_list, lon_list
 
 def interp(frac, lat, lon):

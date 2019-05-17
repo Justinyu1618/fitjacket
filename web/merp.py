@@ -9,13 +9,13 @@ DIST_CONST = 1
 
 def new_data(length):
 	lat_seed = 42.36 + random()*0.01
-	lon_seed = -71.05 + random()*0.01
+	lon_seed = -72.05 + random()*0.01
 	lat_list, lon_list = [lat_seed],[lon_seed]
 	for i in range(length):
-		d = randint(0,10)
+		d = randint(0,3)
 		s = 1 if d %2==0 else -1
-		lat_list.append(lat_list[-1] + s * d * random() * 0.001)
-		lon_list.append(lon_list[-1] + -1 * s * (10-d) * random() * 0.001)
+		lat_list.append(lat_list[-1] +d *  random() * 0.0005)
+		lon_list.append(lon_list[-1] + (3-d)*random() * 0.0005)
 	return lat_list, lon_list
 
 def new_data2(length):
@@ -86,7 +86,7 @@ def build_map(lat_list, lon_list, gm=None, color='#4dcbcc'):
 	return gmap
 
 if __name__ == '__main__':
-	lat, lon = new_data(50)
+	lat, lon = new_data(30)
 	lat2,lon2 = new_data2(20)
 	print(lat2, lon2)
 	lat3, lon3 = new_data2(10)
@@ -94,7 +94,7 @@ if __name__ == '__main__':
 	#lat2_i, lon2_i = interp(0.9, lat2, lon2)
 	#lat = [0,1,2,3,3,2,1,0,-1,-1,0,1,2,3,4,4,3,2,1,0,-1,-2,-2,-1,0,1,2,3,4]
 	#lon = [0,0,0,0,5,5,5,5,5,-5,-5,-5,-5,-5,-5,10,10,10,10,10,10,10,10,-15,-15,-15,-15,-15,-15,-15]
-	lat_i, lon_i = interp(51/180,lat, lon)
+	lat_i, lon_i = interp(30/50,lat, lon)
 	print(f"TEST{len(lat_i), len(lat)}")
 	m1 = build_map(lat, lon)
 	#m2 = build_map(lat2,lon2)
